@@ -1,0 +1,39 @@
+@import 'variables';
+
+//Spinner
+.ant-spin {
+  position: fixed !important;
+  height: 100%;
+  width: 100%;
+  background: #00000017;
+  z-index: 99999;
+  display: flex !important;
+  justify-content: center;
+  align-items: center;
+  .ant-spin-dot {
+    i {
+      background-color: $mainRed;
+    }
+  }
+}
+
+//NotFound Page
+.notFound {
+  >div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    img {
+      max-height: 280px;
+    }
+    span {
+      font-size: 250px;
+    }
+  }
+  p {
+    text-align: center;
+    a {
+      color: $mainRed;
+    }
+  }
+}
