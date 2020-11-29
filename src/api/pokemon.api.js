@@ -4,5 +4,10 @@ export const getPokemonListApi = (offset, limit) =>
     Get(`pokemon?offset=${offset}&limit=${limit}`)
         .then(HandleResponseState)
 
-export const getCurrentPokemonData = (url) =>
-    fetch(url).then(response => response.json())
+export const getCurrentPokemonData = (id) =>
+    Get(`pokemon/${id}`)
+        .then(HandleResponseState)
+
+export const getPokemonListByTypeApi = type =>
+    Get(`type/${type}`)
+        .then(HandleResponseState)

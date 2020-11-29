@@ -1,26 +1,47 @@
 import Paths from "../../enums/Paths";
 import {useParams} from "react-router-dom";
 import {messageType, showMessage} from "../../services/utilities";
-import {useSelector} from "react-redux";
-import React from "react";
+import {useDispatch, useSelector} from "react-redux";
+import React, {useState, useEffect} from "react";
 import '../../styles/pokemonInfo.scss';
 import {Progress} from "antd";
 import {ArrowLeftOutlined} from '@ant-design/icons';
+import {getCurrentPokemonData} from "../../api/pokemon.api";
+import {POKEMON} from "../../actions/_actionTypes";
+import {showLoader} from "../../actions/baseActions";
 
 const PokemonInfoComponent = (props) => {
     const {pokemonId} = useParams();
     const pokemonList = useSelector(state => state.pokemon.data);
+    const [currentPokemon, setCurrentPokemon] = useState({});
+    const dispatch = useDispatch();
 
-    const currentPokemon = pokemonList.find(pokemon => pokemon.id === Number(pokemonId));
+    useEffect(() => {
+        const currentPokemon = pokemonList.find(pokemon => pokemon.id === Number(pokemonId));
 
-    if (!currentPokemon) {
-        showMessage(messageType.error, 'Pokemon not found.');
-        props.history.push(Paths.home);
-        return null
-    }
+        if (currentPokemon) {
+            setCurrentPokemon(currentPokemon)
+        } else {
+            dispatch(showLoader())
+            getCurrentPokemonData(pokemonId).then(res => {
+                if (res.id) {
+                    setCurrentPokemon(res);
+                    const {id, name, abilities, stats, types, sprites} = res;
+                    dispatch({
+                        type: POKEMON.ADD,
+                        payload: [{id, name, abilities, stats, types, sprites}]
+                    });
+                } else {
+                    showMessage(messageType.error, 'Pokemon not found.');
+                    props.history.push(Paths.home);
+                    return null
+                }
+            }).finally(() => dispatch(showLoader(false)))
+        }
+    }, [])
 
     const {name, abilities, stats, types, sprites} = currentPokemon;
-    const {front_default, front_shiny} = sprites;
+    const {front_default, front_shiny} = sprites || {};
 
     return (
         <div className={'container'}>

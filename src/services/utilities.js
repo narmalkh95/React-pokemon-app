@@ -26,3 +26,5 @@ export const handleBottomScroll = (func) => {
         func();
     }
 };
+
+export const getIdFromUrl = (url) => url.replace('https://pokeapi.co/api/v2/pokemon/', '').replace('/', '');

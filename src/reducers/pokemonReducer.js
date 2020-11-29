@@ -9,6 +9,15 @@ export const pokemonReducer = (state = initialState.pokemon, action) => {
             return {...state, data: []};
         case POKEMON.INCREMENT_OFFSET:
             return {...state, offset: state.offset + 1}
+        case POKEMON.ADD_POKEMON_TYPE:
+            return {
+                ...state,
+                typesData: {
+                    ...state.typesData,
+                    [action.payload.type]: action.payload.data
+                }
+            }
+
         default:
             return state;
     }

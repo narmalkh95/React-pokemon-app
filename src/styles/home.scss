@@ -50,6 +50,16 @@
     }
   }
 
+  .pokemonTypeList {
+    p {
+      margin: 0;
+      padding: 15px;
+      text-transform: capitalize;
+      text-align: center;
+      width: 100%;
+    }
+  }
+
   span, button {
     &.bug {background-color: #729f3f !important};
     &.dragon { background-color: #53a4cf !important};
