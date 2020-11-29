@@ -1,0 +1,56 @@
+@import 'variables';
+
+.pokemonDetailsDiv {
+  position: relative;
+  padding: 20px 50px;
+
+  @include defaultDivShadow;
+  .name {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    p {
+      text-transform: capitalize;
+      font-size: 22px !important;
+      font-weight: bold;
+      text-align: center;
+      margin: 0;
+    }
+  }
+  .anticon-arrow-left {
+    font-size: 20px;
+    position: absolute;
+    top: 20px;
+    left: 30px;
+  }
+
+  .row {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    .mainInfo {
+      width: 100%;
+      > div {
+        display: flex;
+        padding: 0 10px;
+        width: inherit;
+        justify-content: space-evenly;
+      }
+      p {
+        &:first-child {
+          font-size: 16px;
+          font-weight: bold;
+        }
+      }
+    }
+    .statsDiv {
+      width: 100%;
+      > p {
+        text-align: center;
+        font-size: 16px;
+        font-weight: bold;
+      }
+    }
+  }
+}

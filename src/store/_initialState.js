@@ -1,7 +1,8 @@
 const initialState = {
     loading: false,
     pokemon: {
-        data: []
+        data: [],
+        offset: 0
     }
 };
 

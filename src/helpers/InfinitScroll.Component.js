@@ -1,21 +1,19 @@
 import React, { useEffect, useState } from "react";
 import { handleBottomScroll } from "../services/utilities";
-import { showLoader } from "../actions/baseActions";
-import { useDispatch } from "react-redux";
 
 const InfinityScrollHook = (props) => {
-    const {children, onBottom, onUnmount} = props;
+    const {children, onBottom, onUnmount, initialData} = props;
     const [isBottom, setIsBottom] = useState(false);
-    const [offset, setOffset] = useState(1);
+    const [offset, setOffset] = useState(0);
     const [loadEnd, setLoadEnd] = useState(false);
-    const dispatch = useDispatch();
 
     useEffect(() => {
-        dispatch(showLoader());
-        onBottom(offset).finally(() => {
-            setOffset(offset => offset + 1)
-            dispatch(showLoader(false));
-        });
+        if (!initialData) {
+            //Get data if not already exists on first rend
+            onBottom(offset).finally(() => {
+                setOffset(offset => offset + 1)
+            });
+        }
 
         window.addEventListener("scroll", () => handleBottomScroll(() => setIsBottom(true)));
 
@@ -28,8 +26,8 @@ const InfinityScrollHook = (props) => {
     useEffect(() => {
         if (isBottom && !loadEnd) {
             onBottom(offset)
-                .then(data => {
-                    if (!data) {
+                .then(dataLength => {
+                    if (!dataLength) {
                         setLoadEnd(true);
                         return
                     }

@@ -1,0 +1,70 @@
+@import "variables";
+
+.pokemonContainer {
+  padding: 30px;
+  .typesDivTop {
+    text-align: center;
+    padding: 30px;
+    button {
+      background-color: #efefef;
+      border-radius: 8px;
+      margin: 10px;
+    }
+  }
+  .pokemonListItem {
+    display: flex;
+    align-items: center;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    transform: translateY(2px);
+    transition: all .3s;
+    @include defaultDivShadow;
+
+    &:hover {
+      transform: translateY(0);
+      cursor: pointer;
+      background-color: #f7f7f7;
+    }
+
+    > div {
+      margin-left: 30px;
+
+      .typesDiv {
+        margin-bottom: 10px;
+        span {
+          margin-right: 15px;
+          padding: 10px;
+          border-radius: 5px;
+          background-color: #efefef; //add default color
+        }
+      }
+      > span {
+        text-transform: capitalize;
+      }
+      p {
+        text-align: center;
+      }
+    }
+  }
+
+  span, button {
+    &.bug {background-color: #729f3f !important};
+    &.dragon { background-color: #53a4cf !important};
+    &.fairy { background-color: #fdb9e9 !important};
+    &.fire { background-color: #fd7d24 !important};
+    &.ghost { background-color: #7b62a3 !important};
+    &.ground { background-color: #f7de3f !important};
+    &.normal { background-color: #a4acaf !important};
+    &.pyschic { background-color: #f366b9 !important};
+    &.steel { background-color: #9eb7b1 !important};
+    &.dark { background-color: #707070 !important};
+    &.electric { background-color: #eed535 !important};
+    &.fighting { background-color: #d56723 !important};
+    &.flying { background-color: #3dc7ef !important};
+    &.grass { background-color: #9bcc50 !important};
+    &.ice { background-color: #51c4e7 !important};
+    &.poison { background-color: #b97fc9 !important};
+    &.rock { background-color: #a38c21 !important};
+    &.water { background-color: #4592c1 !important};
+  }
+}

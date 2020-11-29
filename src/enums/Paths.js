@@ -1,5 +1,6 @@
 const Paths = {
-    home: '/'
+    home: '/',
+    pokemonInfo: '/pokemonInfo/:pokemonId'
 }
 
 export default Paths

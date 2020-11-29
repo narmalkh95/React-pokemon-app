@@ -1,16 +1,36 @@
-import {getPokemonListApi} from "../api/pokemon.api";
+import {getCurrentPokemonData, getPokemonListApi} from "../api/pokemon.api";
 import {POKEMON} from "./_actionTypes";
 import {defaultErrorMsg, messageType, showMessage} from "../services/utilities";
+import {showLoader} from "./baseActions";
 
-export const getPokemonList = (offset = 1, limit = 100) => dispatch => {
-    return getPokemonListApi(offset, limit)
-        .then(res => {
+export const getPokemonList = (offset = 0, limit = 10) => dispatch => {
+    dispatch(showLoader());
+    return getPokemonListApi(offset * limit, limit)
+        .then(async(res) => {
             if (res?.results) {
+                //We have to get pokemon one by one to have types and additional info to show on homepage.
+                //Or we can have just list of pokemon names with unique url to get single pokemon.
+                const pokemonDataList = await Promise.all(
+                    res.results.map(async pokemon => {
+                        const res = await getCurrentPokemonData(pokemon.url);
+                        if (res?.id) {
+                            const {id, name, abilities, stats, types, sprites} = res;
+
+                            //Get values that will be used.
+                            return {id, name, abilities, stats, types, sprites};
+                        }
+                        //else undefined will be returned to an array
+                    })
+                )
+
                 dispatch({
                     type: POKEMON.ADD,
-                    payload: res.results
+                    payload: pokemonDataList.filter(item => item !== undefined)
                 });
-                return true
+
+                dispatch({type: POKEMON.INCREMENT_OFFSET});
+
+                return pokemonDataList.length;
             }
             return false
         })
@@ -19,4 +39,12 @@ export const getPokemonList = (offset = 1, limit = 100) => dispatch => {
             showMessage(messageType.error, defaultErrorMsg)
             return false;
         })
+        .finally(() => {
+            dispatch(showLoader(false));
+        })
+}
+
+export const handlePokemonTypeClick = (type) => dispatch => {
+    dispatch(showLoader());
+
 }

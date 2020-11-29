@@ -1,6 +1,6 @@
 import {LOADING} from "./_actionTypes";
 
-export const showLoader = state => dispatch => {
+export const showLoader = (state = true) => dispatch => {
 	if (state) {
 		dispatch({type: LOADING.START_LOADING})
 	} else {
