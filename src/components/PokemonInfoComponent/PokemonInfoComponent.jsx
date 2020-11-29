@@ -61,11 +61,11 @@ const PokemonInfoComponent = (props) => {
                         <div className={'statsDiv'}>
                             <p>Stats</p>
                             {stats.map(item => {
-                                const {base_stat, stat} = item;
+                                const {base_stat, stat: {name}} = item;
 
                                 return (
-                                    <div>
-                                        <p>{stat.name}</p>
+                                    <div key={name}>
+                                        <p>{name}</p>
                                         <Progress percent={base_stat}/>
                                     </div>
                                 )
